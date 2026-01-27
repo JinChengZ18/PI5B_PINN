@@ -1,0 +1,7 @@
+[2026-01-19 18:31:09][INFO] 日志文件创建于: /data/sda/zjc/comsol_pinn/logs/M02/exp02/train_20260119_183109_gpu2_pid3704373.log
+[2026-01-19 18:31:09][INFO] 进程 PID: 3704373
+[2026-01-19 18:31:09][INFO] ========== FCNN-ANNEAL 训练开始 ==========
+[2026-01-19 18:31:09][INFO] 使用设备: cuda
+[2026-01-19 18:31:09][INFO] 训练参数: {'epochs': 80, 'lr': 0.002, 'batch_cases': 1, 'points_per_case': 6144, 'num_workers': 8, 'device': 'cuda', 'log_dir': 'logs/M02/exp02', 'ckpt_dir': 'checkpoints/M02/exp02'}
+[2026-01-19 18:31:09][INFO] 数据集大小: 141 cases
+[2026-01-19 18:31:09][INFO] 每 case 采样点数: 6144

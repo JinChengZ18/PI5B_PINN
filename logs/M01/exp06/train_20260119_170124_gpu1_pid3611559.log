@@ -1,0 +1,25 @@
+[2026-01-19 17:01:24][INFO] 日志文件创建于: /data/sda/zjc/comsol_pinn/logs/exp06/train_20260119_170124_gpu1_pid3611559.log
+[2026-01-19 17:01:24][INFO] 进程 PID: 3611559
+[2026-01-19 17:01:24][INFO] ========== FCNN-MVP 训练开始 ==========
+[2026-01-19 17:01:24][INFO] 使用设备: cuda
+[2026-01-19 17:01:24][INFO] 训练参数: {'epochs': 100, 'lr': 0.001, 'batch_cases': 1, 'points_per_case': 4096, 'num_workers': 8, 'device': 'cuda', 'log_dir': 'logs/exp06', 'ckpt_dir': 'checkpoints/exp06'}
+[2026-01-19 17:01:24][INFO] 数据集大小: 141 cases
+[2026-01-19 17:01:24][INFO] 每 case 采样点数: 4096
+[2026-01-19 17:01:25][INFO] 模型结构:
+SimplePINN(
+  (net): Sequential(
+    (0): Linear(in_features=7, out_features=128, bias=True)
+    (1): SiLU()
+    (2): Linear(in_features=128, out_features=128, bias=True)
+    (3): SiLU()
+    (4): Linear(in_features=128, out_features=1, bias=True)
+  )
+)
+[2026-01-19 17:01:25][INFO] 优化器: AdamW, lr=0.001
+[2026-01-19 17:03:45][INFO] [Epoch 001] MSE Loss = 32221.119231
+[2026-01-19 17:06:04][INFO] [Epoch 002] MSE Loss = 8390.271491
+[2026-01-19 17:08:23][INFO] [Epoch 003] MSE Loss = 6460.329266
+[2026-01-19 17:10:41][INFO] [Epoch 004] MSE Loss = 6010.444320
+[2026-01-19 17:13:01][INFO] [Epoch 005] MSE Loss = 5413.278209
+[2026-01-19 17:15:22][INFO] [Epoch 006] MSE Loss = 4995.724068
+[2026-01-19 17:17:41][INFO] [Epoch 007] MSE Loss = 4602.800860

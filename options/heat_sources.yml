@@ -1,0 +1,31 @@
+metadata_templates:
+  tag: "SoC_{soc_power:.1f}W_PMIC_{pmic_power:.1f}W_USB_{usb_power:.1f}W_Other_{other_power:.1f}W"
+metadata_expressions:
+  total_power: "soc_power + pmic_power + usb_power + other_power"
+
+# 四个热源功率参数化配置
+# 约束条件: SoC功率 > PMIC功率 > USB功率, Other功率
+parameters:
+  - name: soc_power
+    unit: W
+    alias: soc_power
+    description: BCM2712 SoC heat dissipation power (主芯片，最大热源)
+    values: [2.0, 6.0, 10.0, 12.0]  # 空闲、轻负载、高负载、峰值TDP
+
+  - name: pmic_power
+    unit: W
+    alias: pmic_power
+    description: PMIC (Power Management IC) heat dissipation power (电源管理芯片)
+    values: [0.2, 0.5, 1.0, 1.5]  # 次要热源
+
+  - name: usb_power
+    unit: W
+    alias: usb_power
+    description: USB and Ethernet interface heat dissipation power (USB/网络接口)
+    values: [0.1, 0.3, 0.5]  # 较小热源
+
+  - name: other_power
+    unit: W
+    alias: other_power
+    description: Other component heat dissipation power (其他器件，如RP1南桥)
+    values: [0.2, 0.5, 1.0]  # 较小热源

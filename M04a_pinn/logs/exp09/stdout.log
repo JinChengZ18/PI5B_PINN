@@ -1,0 +1,31 @@
+[2026-01-26 18:18:22][INFO] 日志文件创建于: /data/sda/zjc/comsol_pinn/logs/M04/exp09/train_20260126_181822_gpu4_pid3585901.log
+[2026-01-26 18:18:22][INFO] 进程 PID: 3585901
+[2026-01-26 18:18:22][INFO] ========== PINN 训练开始 ==========
+[2026-01-26 18:18:22][INFO] 物理项权重 λ_pde = 3.0
+[2026-01-26 18:18:22][INFO] 使用设备: cuda
+[2026-01-26 18:18:22][INFO] 训练参数: {'lambda_pde': 3.0, 'epochs': 120, 'lr': 0.005, 'batch_cases': 1, 'points_per_case': 600000, 'num_workers': 8, 'device': 'cuda', 'log_dir': 'logs/M04/exp09', 'ckpt_dir': 'checkpoints/M04/exp09'}
+[2026-01-26 18:18:22][INFO] 数据集大小: 141 cases
+[2026-01-26 18:18:22][INFO] 每 case 采样点数: 600000
+[2026-01-26 18:18:26][INFO] 模型结构:
+SimplePINN(
+  (net): Sequential(
+    (0): Linear(in_features=7, out_features=128, bias=True)
+    (1): SiLU()
+    (2): Linear(in_features=128, out_features=128, bias=True)
+    (3): SiLU()
+    (4): Linear(in_features=128, out_features=1, bias=True)
+  )
+)
+[2026-01-26 18:18:26][INFO] 优化器: AdamW, 初始 lr=0.005, 调度策略: ReduceLROnPlateau(factor=0.5, patience=10)
+Traceback (most recent call last):
+  File "/data/sda/zjc/comsol_pinn/M04_pinn/train.py", line 132, in <module>
+    main()
+  File "/data/sda/zjc/comsol_pinn/M04_pinn/train.py", line 101, in main
+    lap = model.laplacian(x7)
+  File "/data/sda/zjc/comsol_pinn/M04_pinn/model.py", line 42, in laplacian
+    grad2 = torch.autograd.grad(
+  File "/home/ubuntu/se42/anaconda3/envs/torch/lib/python3.10/site-packages/torch/autograd/__init__.py", line 503, in grad
+    result = _engine_run_backward(
+  File "/home/ubuntu/se42/anaconda3/envs/torch/lib/python3.10/site-packages/torch/autograd/graph.py", line 841, in _engine_run_backward
+    return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 256.00 MiB. GPU 0 has a total capacity of 47.40 GiB of which 62.12 MiB is free. Process 3380312 has 2.48 GiB memory in use. Process 3380343 has 13.21 GiB memory in use. Process 3585868 has 18.30 GiB memory in use. Including non-PyTorch memory, this process has 13.30 GiB memory in use. Of the allocated memory 12.60 GiB is allocated by PyTorch, and 208.85 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)

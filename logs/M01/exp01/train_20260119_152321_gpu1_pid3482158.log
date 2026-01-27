@@ -1,0 +1,52 @@
+[2026-01-19 15:23:21][INFO] 日志文件创建于: /data/sda/zjc/comsol_pinn/logs/exp01/train_20260119_152321_gpu1_pid3482158.log
+[2026-01-19 15:23:21][INFO] 进程 PID: 3482158
+[2026-01-19 15:23:21][INFO] ========== FCNN-MVP 训练开始 ==========
+[2026-01-19 15:23:21][INFO] 使用设备: cuda
+[2026-01-19 15:23:21][INFO] 训练参数: {'epochs': 80, 'lr': 0.0001, 'batch_cases': 1, 'points_per_case': 4096, 'num_workers': 8, 'device': 'cuda', 'log_dir': 'logs/exp01', 'ckpt_dir': 'checkpoints/exp01'}
+[2026-01-19 15:23:21][INFO] 数据集大小: 141 cases
+[2026-01-19 15:23:21][INFO] 每 case 采样点数: 4096
+[2026-01-19 15:23:22][INFO] 模型结构:
+SimplePINN(
+  (net): Sequential(
+    (0): Linear(in_features=7, out_features=128, bias=True)
+    (1): SiLU()
+    (2): Linear(in_features=128, out_features=128, bias=True)
+    (3): SiLU()
+    (4): Linear(in_features=128, out_features=1, bias=True)
+  )
+)
+[2026-01-19 15:23:22][INFO] 优化器: AdamW, lr=0.0001
+[2026-01-19 15:25:43][INFO] [Epoch 001] MSE Loss = 94402.613475
+[2026-01-19 15:28:04][INFO] [Epoch 002] MSE Loss = 63166.452903
+[2026-01-19 15:30:25][INFO] [Epoch 003] MSE Loss = 29750.326394
+[2026-01-19 15:32:44][INFO] [Epoch 004] MSE Loss = 17741.365809
+[2026-01-19 15:35:05][INFO] [Epoch 005] MSE Loss = 15240.172831
+[2026-01-19 15:37:27][INFO] [Epoch 006] MSE Loss = 13679.890985
+[2026-01-19 15:39:47][INFO] [Epoch 007] MSE Loss = 12570.135451
+[2026-01-19 15:42:07][INFO] [Epoch 008] MSE Loss = 11624.510486
+[2026-01-19 15:44:31][INFO] [Epoch 009] MSE Loss = 10924.514337
+[2026-01-19 15:46:50][INFO] [Epoch 010] MSE Loss = 10301.783937
+[2026-01-19 15:49:12][INFO] [Epoch 011] MSE Loss = 9750.335487
+[2026-01-19 15:51:32][INFO] [Epoch 012] MSE Loss = 9247.739625
+[2026-01-19 15:53:49][INFO] [Epoch 013] MSE Loss = 8808.391214
+[2026-01-19 15:56:07][INFO] [Epoch 014] MSE Loss = 8350.613108
+[2026-01-19 15:58:28][INFO] [Epoch 015] MSE Loss = 8066.119972
+[2026-01-19 16:00:52][INFO] [Epoch 016] MSE Loss = 7731.563411
+[2026-01-19 16:03:12][INFO] [Epoch 017] MSE Loss = 7454.421633
+[2026-01-19 16:05:33][INFO] [Epoch 018] MSE Loss = 7288.845710
+[2026-01-19 16:07:56][INFO] [Epoch 019] MSE Loss = 7063.857349
+[2026-01-19 16:10:17][INFO] [Epoch 020] MSE Loss = 6891.036393
+[2026-01-19 16:12:35][INFO] [Epoch 021] MSE Loss = 6771.909211
+[2026-01-19 16:14:58][INFO] [Epoch 022] MSE Loss = 6618.172382
+[2026-01-19 16:17:19][INFO] [Epoch 023] MSE Loss = 6537.910077
+[2026-01-19 16:19:38][INFO] [Epoch 024] MSE Loss = 6401.176507
+[2026-01-19 16:22:01][INFO] [Epoch 025] MSE Loss = 6331.080734
+[2026-01-19 16:24:24][INFO] [Epoch 026] MSE Loss = 6253.574939
+[2026-01-19 16:26:46][INFO] [Epoch 027] MSE Loss = 6159.779105
+[2026-01-19 16:29:07][INFO] [Epoch 028] MSE Loss = 6096.026935
+[2026-01-19 16:31:26][INFO] [Epoch 029] MSE Loss = 6011.937337
+[2026-01-19 16:33:40][INFO] [Epoch 030] MSE Loss = 5940.445522
+[2026-01-19 16:36:00][INFO] [Epoch 031] MSE Loss = 5896.284026
+[2026-01-19 16:38:19][INFO] [Epoch 032] MSE Loss = 5869.582852
+[2026-01-19 16:40:38][INFO] [Epoch 033] MSE Loss = 5751.998738
+[2026-01-19 16:42:58][INFO] [Epoch 034] MSE Loss = 5686.922945

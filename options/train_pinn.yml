@@ -1,0 +1,77 @@
+# 物理信息神经网络 (PINN) 训练配置
+# 硬件: RTX 5060 8GB 显存
+# 优化目标: 平衡训练速度和模型性能
+
+dataset:
+  index_file: data/thermal_heat_source/index.jsonl  # 热源参数化数据集
+  points_per_case: 4096        # ↓ 4096 -> 3072，每个case少一点点
+  stat_points_per_case: 768    # ↓ 1024 -> 768
+  columns: 
+    x: x
+    y: y
+    z: z
+    temperature: T
+  cache_csv: true              # 缓存CSV加速读取
+  num_workers: 2              # 数据加载线程数
+  seed: 42
+
+model:
+  # 网络容量 - RTX 5060优化配置
+  hidden_dim: 384              # ↓ 512 -> 384，稍微瘦一点
+  depth: 9                     # ↓ 10 -> 9，少一层
+  activation: silu             # SiLU在热场问题上表现好
+  dropout: 0.1                 # 适度dropout防止过拟合
+
+  # Fourier编码 - 提升高频表达
+  use_fourier: true
+  fourier_dim: 192             # ↓ 256 -> 192，仍然比128大
+  fourier_sigma: 1.0           # 标准差 (可实验0.5-2.0)
+
+  # 残差连接 - 支持深层网络
+  use_residual: true
+
+training:
+  # 基础训练参数
+  epochs: 600                  # 充足的训练轮数
+  batch_size: 2                
+  lr: 0.0005                   # 学习率
+  weight_decay: 0.0001         # L2正则化
+  device: cuda                 
+  train_ratio: 0.85            # 85%训练, 15%验证
+
+  # 物理损失配置
+  use_physics_loss: true       # 启用物理约束
+  physics_sample_ratio: 0.50
+
+  # 边界条件损失配置
+  use_boundary_loss: true      # 启用边界条件约束
+  boundary_sample_ratio: 0.2   # 边界点采样比例（占batch的20%）
+  boundary_threshold: 0.05     # 边界识别阈值（占坐标范围的5%）
+
+  # 损失函数权重
+  loss:
+    lambda_data: 1.0           # 数据拟合权重
+    lambda_physics: 0.02       # 物理约束权重
+    lambda_bc: 0.01            # 边界条件权重 (启用)
+    adaptive_weights: false    # 可尝试设为true实验自适应权重
+    data_loss_type: mse        # MSE损失
+
+  # 学习率调度和早停
+  scheduler_patience: 20       # 验证损失20轮不降则减半学习率
+  early_stop_patience: 60      # 60轮不改善则停止
+
+  # 日志和检查点
+  log_interval: 5              # 每5轮打印一次
+  checkpoint_interval: 60      # 每50轮保存一次
+  output_dir: checkpoints/thermal_pinn  # 重新组织输出目录
+
+# 扩展预留 (未来可能的参数化维度)
+# future_extensions:
+#   fan_params:
+#     - fan_speed (RPM)
+#     - fan_position (x, y, z)
+#     - fan_orientation (angle)
+#   geometry_params:
+#     - heatsink_height
+#     - fin_spacing
+#     - pcb_thickness

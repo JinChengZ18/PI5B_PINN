@@ -1,0 +1,25 @@
+[2026-01-27 10:10:39][INFO] 日志文件创建于: /data/sda/zjc/comsol_pinn/logs/M04/exp09/train_20260127_101039_gpu2_pid276506.log
+[2026-01-27 10:10:39][INFO] 进程 PID: 276506
+[2026-01-27 10:10:39][INFO] ========== PINN 训练开始 ==========
+[2026-01-27 10:10:39][INFO] 物理项权重 λ_pde = 3.0
+[2026-01-27 10:10:39][INFO] 使用设备: cuda
+[2026-01-27 10:10:39][INFO] 训练参数: {'lambda_pde': 3.0, 'epochs': 120, 'lr': 0.005, 'batch_cases': 1, 'points_per_case': 600000, 'device': 'cuda', 'num_workers': 8, 'log_dir': 'logs/M04/exp09', 'ckpt_dir': 'checkpoints/M04/exp09'}
+[2026-01-27 10:10:39][INFO] 数据集大小: 141 cases
+[2026-01-27 10:10:39][INFO] 每 case 采样点数: 600000
+[2026-01-27 10:10:40][INFO] 模型结构:
+SimplePINN(
+  (net): Sequential(
+    (0): Linear(in_features=7, out_features=128, bias=True)
+    (1): SiLU()
+    (2): Linear(in_features=128, out_features=128, bias=True)
+    (3): SiLU()
+    (4): Linear(in_features=128, out_features=1, bias=True)
+  )
+)
+[2026-01-27 10:10:40][INFO] 优化器: AdamW, 初始 lr=0.005, 调度策略: ReduceLROnPlateau(factor=0.5, patience=10)
+[2026-01-27 10:22:08][INFO] [Epoch 001] MSE Loss = 22399.312456 | PDE LOSS = 0.480568 |  LR = 5.00e-03
+[2026-01-27 10:33:31][INFO] [Epoch 002] MSE Loss = 917.207210 | PDE LOSS = 0.000000 |  LR = 5.00e-03
+[2026-01-27 10:45:04][INFO] [Epoch 003] MSE Loss = 539.430629 | PDE LOSS = 0.694039 |  LR = 5.00e-03
+[2026-01-27 10:56:31][INFO] [Epoch 004] MSE Loss = 479.050131 | PDE LOSS = 0.000000 |  LR = 5.00e-03
+[2026-01-27 11:07:58][INFO] [Epoch 005] MSE Loss = 522.207829 | PDE LOSS = 0.657861 |  LR = 5.00e-03
+[2026-01-27 11:19:24][INFO] [Epoch 006] MSE Loss = 511.689287 | PDE LOSS = 0.983758 |  LR = 5.00e-03

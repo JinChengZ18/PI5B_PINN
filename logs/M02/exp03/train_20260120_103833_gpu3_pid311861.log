@@ -1,0 +1,98 @@
+[2026-01-20 10:38:33][INFO] 日志文件创建于: /data/sda/zjc/comsol_pinn/logs/M02/exp03/train_20260120_103833_gpu3_pid311861.log
+[2026-01-20 10:38:33][INFO] 进程 PID: 311861
+[2026-01-20 10:38:33][INFO] ========== FCNN-ANNEAL 训练开始 ==========
+[2026-01-20 10:38:33][INFO] 使用设备: cuda
+[2026-01-20 10:38:33][INFO] 训练参数: {'epochs': 80, 'lr': 0.005, 'batch_cases': 1, 'points_per_case': 8192, 'num_workers': 8, 'device': 'cuda', 'log_dir': 'logs/M02/exp03', 'ckpt_dir': 'checkpoints/M02/exp03'}
+[2026-01-20 10:38:33][INFO] 数据集大小: 141 cases
+[2026-01-20 10:38:33][INFO] 每 case 采样点数: 8192
+[2026-01-20 10:38:34][INFO] 模型结构:
+SimplePINN(
+  (net): Sequential(
+    (0): Linear(in_features=7, out_features=128, bias=True)
+    (1): SiLU()
+    (2): Linear(in_features=128, out_features=128, bias=True)
+    (3): SiLU()
+    (4): Linear(in_features=128, out_features=1, bias=True)
+  )
+)
+[2026-01-20 10:38:34][INFO] 优化器: AdamW, 初始 lr=0.005, 调度策略: ReduceLROnPlateau(factor=0.5, patience=10)
+[2026-01-20 10:40:52][INFO] [Epoch 001] MSE Loss = 14029.016816 | LR = 5.00e-03
+[2026-01-20 10:43:12][INFO] [Epoch 002] MSE Loss = 5354.877248 | LR = 5.00e-03
+[2026-01-20 10:45:33][INFO] [Epoch 003] MSE Loss = 3721.932271 | LR = 5.00e-03
+[2026-01-20 10:47:52][INFO] [Epoch 004] MSE Loss = 3327.796229 | LR = 5.00e-03
+[2026-01-20 10:50:12][INFO] [Epoch 005] MSE Loss = 2293.983940 | LR = 5.00e-03
+[2026-01-20 10:52:31][INFO] [Epoch 006] MSE Loss = 1926.293813 | LR = 5.00e-03
+[2026-01-20 10:54:51][INFO] [Epoch 007] MSE Loss = 1416.895935 | LR = 5.00e-03
+[2026-01-20 10:57:12][INFO] [Epoch 008] MSE Loss = 1047.249228 | LR = 5.00e-03
+[2026-01-20 10:59:35][INFO] [Epoch 009] MSE Loss = 943.377223 | LR = 5.00e-03
+[2026-01-20 11:01:55][INFO] [Epoch 010] MSE Loss = 680.174720 | LR = 5.00e-03
+[2026-01-20 11:04:16][INFO] [Epoch 011] MSE Loss = 449.539033 | LR = 5.00e-03
+[2026-01-20 11:06:37][INFO] [Epoch 012] MSE Loss = 228.948995 | LR = 5.00e-03
+[2026-01-20 11:08:59][INFO] [Epoch 013] MSE Loss = 186.353675 | LR = 5.00e-03
+[2026-01-20 11:11:21][INFO] [Epoch 014] MSE Loss = 177.167359 | LR = 5.00e-03
+[2026-01-20 11:13:42][INFO] [Epoch 015] MSE Loss = 142.059288 | LR = 5.00e-03
+[2026-01-20 11:16:03][INFO] [Epoch 016] MSE Loss = 130.023788 | LR = 5.00e-03
+[2026-01-20 11:18:24][INFO] [Epoch 017] MSE Loss = 123.156435 | LR = 5.00e-03
+[2026-01-20 11:20:43][INFO] [Epoch 018] MSE Loss = 120.155297 | LR = 5.00e-03
+[2026-01-20 11:23:01][INFO] [Epoch 019] MSE Loss = 111.869146 | LR = 5.00e-03
+[2026-01-20 11:25:21][INFO] [Epoch 020] MSE Loss = 109.566649 | LR = 5.00e-03
+[2026-01-20 11:27:42][INFO] [Epoch 021] MSE Loss = 101.966007 | LR = 5.00e-03
+[2026-01-20 11:30:01][INFO] [Epoch 022] MSE Loss = 168.018669 | LR = 5.00e-03
+[2026-01-20 11:32:21][INFO] [Epoch 023] MSE Loss = 191.012725 | LR = 5.00e-03
+[2026-01-20 11:34:43][INFO] [Epoch 024] MSE Loss = 171.821876 | LR = 5.00e-03
+[2026-01-20 11:37:06][INFO] [Epoch 025] MSE Loss = 111.909150 | LR = 5.00e-03
+[2026-01-20 11:39:28][INFO] [Epoch 026] MSE Loss = 78.336799 | LR = 5.00e-03
+[2026-01-20 11:41:48][INFO] [Epoch 027] MSE Loss = 81.873780 | LR = 5.00e-03
+[2026-01-20 11:44:10][INFO] [Epoch 028] MSE Loss = 71.086415 | LR = 5.00e-03
+[2026-01-20 11:46:30][INFO] [Epoch 029] MSE Loss = 109.202997 | LR = 5.00e-03
+[2026-01-20 11:48:48][INFO] [Epoch 030] MSE Loss = 74.338159 | LR = 5.00e-03
+[2026-01-20 11:51:07][INFO] [Epoch 031] MSE Loss = 76.180938 | LR = 5.00e-03
+[2026-01-20 11:53:26][INFO] [Epoch 032] MSE Loss = 109.934764 | LR = 5.00e-03
+[2026-01-20 11:55:47][INFO] [Epoch 033] MSE Loss = 166.300947 | LR = 5.00e-03
+[2026-01-20 11:58:09][INFO] [Epoch 034] MSE Loss = 101.863356 | LR = 5.00e-03
+[2026-01-20 12:00:30][INFO] [Epoch 035] MSE Loss = 312.407565 | LR = 5.00e-03
+[2026-01-20 12:02:53][INFO] [Epoch 036] MSE Loss = 85.168545 | LR = 5.00e-03
+[2026-01-20 12:05:14][INFO] [Epoch 037] MSE Loss = 57.363431 | LR = 5.00e-03
+[2026-01-20 12:07:36][INFO] [Epoch 038] MSE Loss = 55.045097 | LR = 5.00e-03
+[2026-01-20 12:09:57][INFO] [Epoch 039] MSE Loss = 58.978810 | LR = 5.00e-03
+[2026-01-20 12:12:19][INFO] [Epoch 040] MSE Loss = 80.579463 | LR = 5.00e-03
+[2026-01-20 12:14:41][INFO] [Epoch 041] MSE Loss = 136.828987 | LR = 5.00e-03
+[2026-01-20 12:17:01][INFO] [Epoch 042] MSE Loss = 245.125520 | LR = 5.00e-03
+[2026-01-20 12:19:24][INFO] [Epoch 043] MSE Loss = 65.721549 | LR = 5.00e-03
+[2026-01-20 12:21:46][INFO] [Epoch 044] MSE Loss = 49.866218 | LR = 5.00e-03
+[2026-01-20 12:24:05][INFO] [Epoch 045] MSE Loss = 43.410831 | LR = 5.00e-03
+[2026-01-20 12:26:24][INFO] [Epoch 046] MSE Loss = 39.500682 | LR = 5.00e-03
+[2026-01-20 12:28:42][INFO] [Epoch 047] MSE Loss = 40.797614 | LR = 5.00e-03
+[2026-01-20 12:31:03][INFO] [Epoch 048] MSE Loss = 74.445643 | LR = 5.00e-03
+[2026-01-20 12:33:23][INFO] [Epoch 049] MSE Loss = 100.757677 | LR = 5.00e-03
+[2026-01-20 12:35:43][INFO] [Epoch 050] MSE Loss = 87.176603 | LR = 5.00e-03
+[2026-01-20 12:38:01][INFO] [Epoch 051] MSE Loss = 45.602671 | LR = 5.00e-03
+[2026-01-20 12:40:20][INFO] [Epoch 052] MSE Loss = 59.407158 | LR = 5.00e-03
+[2026-01-20 12:42:39][INFO] [Epoch 053] MSE Loss = 37.238774 | LR = 5.00e-03
+[2026-01-20 12:44:56][INFO] [Epoch 054] MSE Loss = 82.897985 | LR = 5.00e-03
+[2026-01-20 12:47:16][INFO] [Epoch 055] MSE Loss = 73.101221 | LR = 5.00e-03
+[2026-01-20 12:49:34][INFO] [Epoch 056] MSE Loss = 55.339597 | LR = 5.00e-03
+[2026-01-20 12:51:52][INFO] [Epoch 057] MSE Loss = 57.560466 | LR = 5.00e-03
+[2026-01-20 12:54:12][INFO] [Epoch 058] MSE Loss = 40.193668 | LR = 5.00e-03
+[2026-01-20 12:56:31][INFO] [Epoch 059] MSE Loss = 109.233394 | LR = 5.00e-03
+[2026-01-20 12:58:48][INFO] [Epoch 060] MSE Loss = 88.110036 | LR = 5.00e-03
+[2026-01-20 13:01:07][INFO] [Epoch 061] MSE Loss = 36.862074 | LR = 5.00e-03
+[2026-01-20 13:03:28][INFO] [Epoch 062] MSE Loss = 76.259437 | LR = 5.00e-03
+[2026-01-20 13:05:46][INFO] [Epoch 063] MSE Loss = 321.764554 | LR = 5.00e-03
+[2026-01-20 13:08:05][INFO] [Epoch 064] MSE Loss = 75.190363 | LR = 5.00e-03
+[2026-01-20 13:10:25][INFO] [Epoch 065] MSE Loss = 30.182675 | LR = 5.00e-03
+[2026-01-20 13:12:47][INFO] [Epoch 066] MSE Loss = 27.117842 | LR = 5.00e-03
+[2026-01-20 13:15:08][INFO] [Epoch 067] MSE Loss = 28.936974 | LR = 5.00e-03
+[2026-01-20 13:17:24][INFO] [Epoch 068] MSE Loss = 44.185068 | LR = 5.00e-03
+[2026-01-20 13:19:44][INFO] [Epoch 069] MSE Loss = 72.534126 | LR = 5.00e-03
+[2026-01-20 13:22:04][INFO] [Epoch 070] MSE Loss = 69.680839 | LR = 5.00e-03
+[2026-01-20 13:24:21][INFO] [Epoch 071] MSE Loss = 27.799395 | LR = 5.00e-03
+[2026-01-20 13:26:38][INFO] [Epoch 072] MSE Loss = 29.308443 | LR = 5.00e-03
+[2026-01-20 13:28:58][INFO] [Epoch 073] MSE Loss = 47.983570 | LR = 5.00e-03
+[2026-01-20 13:31:15][INFO] [Epoch 074] MSE Loss = 74.260694 | LR = 5.00e-03
+[2026-01-20 13:33:36][INFO] [Epoch 075] MSE Loss = 95.947301 | LR = 5.00e-03
+[2026-01-20 13:35:55][INFO] [Epoch 076] MSE Loss = 267.052576 | LR = 5.00e-03
+[2026-01-20 13:38:17][INFO] [Epoch 077] MSE Loss = 40.292117 | LR = 5.00e-03
+[2026-01-20 13:40:35][INFO] [Epoch 078] MSE Loss = 33.729304 | LR = 2.50e-03
+[2026-01-20 13:42:54][INFO] [Epoch 079] MSE Loss = 31.250428 | LR = 2.50e-03
+[2026-01-20 13:45:15][INFO] [Epoch 080] MSE Loss = 29.727504 | LR = 2.50e-03
