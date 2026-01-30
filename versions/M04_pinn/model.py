@@ -1,15 +1,14 @@
 # model.py
 import torch
 import torch.nn as nn
-from M03_fcnn_fourier.fourier import FourierFeatureEncoding
 
 
-
-class SimpleFCNN(nn.Module):
+class SimplePINN(nn.Module):
     """
-    初版最简单 FCNN:
-    7 -> 128 -> 128 -> 1
+    M04-PINN:
+    在 M02_fcnn_anneal 基础上增加 Laplacian 计算
     """
+
     def __init__(self):
         super().__init__()
         self.net = nn.Sequential(
@@ -19,30 +18,34 @@ class SimpleFCNN(nn.Module):
             nn.SiLU(),
             nn.Linear(128, 1),
         )
+
     def forward(self, x):
         return self.net(x)
 
+    def laplacian(self, x):
+        """
+        ∇²T，仅对 x,y,z 三个维度
+        """
+        T = self.forward(x)
 
-class SimpleFourier(nn.Module):
-    """
-    FCNN + Fourier:
-    7 -> 128 -> 128 -> 1
-    """
-    def __init__(self):
-        super().__init__()
-        self.fourier = FourierFeatureEncoding(
-            in_dim=7,
-            num_frequencies=64,
-            scale=10.0
-        )
-        self.net = nn.Sequential(
-            nn.Linear(128, 128),
-            nn.SiLU(),
-            nn.Linear(128, 128),
-            nn.SiLU(),
-            nn.Linear(128, 1)
-        )
-    def forward(self, x):
-        x = self.fourier(x)
-        return self.net(x)
+        grads = torch.autograd.grad(
+            T,
+            x,
+            grad_outputs=torch.ones_like(T),
+            create_graph=True,
+            retain_graph=True,
+        )[0]
 
+        lap = 0.0
+        for i in range(3):
+            grad_i = grads[:, i:i+1]
+            grad2 = torch.autograd.grad(
+                grad_i,
+                x,
+                grad_outputs=torch.ones_like(grad_i),
+                create_graph=True,
+                retain_graph=True,
+            )[0][:, i:i+1]
+            lap += grad2
+
+        return lap

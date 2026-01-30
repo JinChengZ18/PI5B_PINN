@@ -1,11 +1,11 @@
-# pinn_mvp/model.py
+# model.py
 import torch
 import torch.nn as nn
 
 
-class SimplePINN(nn.Module):
+class SimpleFCNN(nn.Module):
     """
-    初版最简单 PINN：
+    初版最简单 FCNN：
     7 -> 128 -> 128 -> 1
     """
 

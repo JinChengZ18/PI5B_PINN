@@ -16,15 +16,15 @@ echo "Max concurrent jobs: ${MAX_CONCURRENT}"
 # 实验参数
 # ================================
 EXPERIMENTS=(
-  "--epochs 120  --lr 5e-3 --points_per_case 10000 --log_dir logs/M03/exp01 --ckpt_dir checkpoints/M03/exp01"
-  "--epochs 120  --lr 5e-3 --points_per_case 20000 --log_dir logs/M03/exp02 --ckpt_dir checkpoints/M03/exp02"
-  "--epochs 120  --lr 5e-3 --points_per_case 40000 --log_dir logs/M03/exp03 --ckpt_dir checkpoints/M03/exp03"
-  "--epochs 120 --lr 5e-3 --points_per_case 80000 --log_dir logs/M03/exp04 --ckpt_dir checkpoints/M03/exp04"
-  "--epochs 120 --lr 5e-3 --points_per_case 100000 --log_dir logs/M03/exp05 --ckpt_dir checkpoints/M03/exp05"
-  "--epochs 120 --lr 5e-3 --points_per_case 200000 --log_dir logs/M03/exp06 --ckpt_dir checkpoints/M03/exp06"
-  "--epochs 120 --lr 5e-3 --points_per_case 300000 --log_dir logs/M03/exp07 --ckpt_dir checkpoints/M03/exp07"
-  "--epochs 120 --lr 5e-3 --points_per_case 400000 --log_dir logs/M03/exp08 --ckpt_dir checkpoints/M03/exp08"
-  "--epochs 120 --lr 5e-3 --points_per_case 600000 --log_dir logs/M03/exp09 --ckpt_dir checkpoints/M03/exp09"
+  "--epochs 150  --lr 5e-3 --points_per_case 10000 --log_dir logs/M03/exp01 --ckpt_dir checkpoints/M03/exp01"
+  "--epochs 150  --lr 5e-3 --points_per_case 20000 --log_dir logs/M03/exp02 --ckpt_dir checkpoints/M03/exp02"
+  "--epochs 150  --lr 5e-3 --points_per_case 40000 --log_dir logs/M03/exp03 --ckpt_dir checkpoints/M03/exp03"
+  "--epochs 150 --lr 5e-3 --points_per_case 80000 --log_dir logs/M03/exp04 --ckpt_dir checkpoints/M03/exp04"
+  "--epochs 150 --lr 5e-3 --points_per_case 100000 --log_dir logs/M03/exp05 --ckpt_dir checkpoints/M03/exp05"
+  "--epochs 150 --lr 5e-3 --points_per_case 200000 --log_dir logs/M03/exp06 --ckpt_dir checkpoints/M03/exp06"
+  "--epochs 150 --lr 5e-3 --points_per_case 300000 --log_dir logs/M03/exp07 --ckpt_dir checkpoints/M03/exp07"
+  "--epochs 150 --lr 5e-3 --points_per_case 400000 --log_dir logs/M03/exp08 --ckpt_dir checkpoints/M03/exp08"
+  "--epochs 150 --lr 5e-3 --points_per_case 600000 --log_dir logs/M03/exp09 --ckpt_dir checkpoints/M03/exp09"
 )
 
 # ================================

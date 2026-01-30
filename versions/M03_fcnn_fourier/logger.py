@@ -1,4 +1,4 @@
-# M01fcnn_mvp/logging.py
+# logger.py
 import logging
 from pathlib import Path
 from datetime import datetime

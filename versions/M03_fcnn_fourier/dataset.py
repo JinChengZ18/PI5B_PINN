@@ -1,4 +1,4 @@
-# pinn_mvp/dataset.py
+# dataset.py
 import json
 import csv
 import torch

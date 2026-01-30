@@ -1,3 +1,4 @@
+# train.py
 import sys
 import argparse
 from pathlib import Path
@@ -12,7 +13,7 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
 
 from M02_fcnn_anneal.dataset import ThermalHeatSourceDataset
-from M02_fcnn_anneal.model import SimplePINN
+from M02_fcnn_anneal.model import SimpleFCNN
 from M02_fcnn_anneal.logger import setup_logger
 
 
@@ -22,7 +23,7 @@ def parse_args():
     # ---------- 训练超参数 ----------
     parser.add_argument("--epochs", type=int, default=50)
     parser.add_argument("--lr", type=float, default=5e-3)
-    parser.add_argument("--batch_cases", type=int, default=2)
+    parser.add_argument("--batch_cases", type=int, default=1)
     parser.add_argument("--points_per_case", type=int, default=60000)
     parser.add_argument("--num_workers", type=int, default=16)
 
@@ -64,7 +65,7 @@ def main():
     logger.info(f"每 case 采样点数: {args.points_per_case}")
 
     # ================= 模型 =================
-    model = SimplePINN().to(device)
+    model = SimpleFCNN().to(device)
     optimizer = torch.optim.AdamW(model.parameters(), lr=args.lr)
 
     # ReduceLROnPlateau 学习率调度器

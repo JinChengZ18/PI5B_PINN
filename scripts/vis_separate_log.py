@@ -8,8 +8,9 @@ from pathlib import Path
 import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
 
+# 支持 MSE Loss 和 PDE Loss 的正则表达式
 EPOCH_LOSS_PATTERN = re.compile(
-    r"\[Epoch\s+(\d+)\]\s+MSE Loss\s+=\s+([0-9.eE+-]+)"
+    r"\[Epoch\s+(\d+)\]\s+MSE Loss\s*=\s*([0-9.eE+-]+)(?:\s*\|\s*PDE Loss\s*=\s*([0-9.eE+-]+))?"
 )
 
 MODEL_COLORS = [
@@ -62,14 +63,16 @@ def configure_plot_style(usetex: bool):
 
 
 def parse_log_file(log_path: Path):
-    epochs, losses = [], []
+    epochs, data_losses, pde_losses = [], [], []
     with log_path.open("r", encoding="utf-8", errors="ignore") as f:
         for line in f:
             m = EPOCH_LOSS_PATTERN.search(line)
             if m:
                 epochs.append(int(m.group(1)))
-                losses.append(float(m.group(2)))
-    return epochs, losses
+                data_losses.append(float(m.group(2)))
+                # 如果有 PDE Loss，就添加；否则用 None 占位
+                pde_losses.append(float(m.group(3)) if m.group(3) is not None else None)
+    return epochs, data_losses, pde_losses
 
 
 def find_all_logs(logs_root: Path):
@@ -109,20 +112,33 @@ def plot_model_loss(
     for exp, log_files in sorted(logs_by_exp.items()):
         ls = exp_to_linestyle(exp)
         for k, log_file in enumerate(log_files):
-            epochs, losses = parse_log_file(log_file)
+            epochs, data_losses, pde_losses = parse_log_file(log_file)
             if not epochs:
                 continue
             plotted_any = True
             alpha = max(0.35, 0.85 - 0.15 * k)
             label = exp if k == 0 else None
+
+            # 绘制 Data Loss
             ax.plot(
                 epochs,
-                losses,
+                data_losses,
                 linestyle=ls,
                 alpha=alpha,
-                label=label,
+                label=f"{label} - Data",
                 color=MODEL_COLORS[0],
             )
+
+            # 如果 PDE Loss 存在，绘制 PDE Loss
+            if any(pde is not None for pde in pde_losses):
+                ax.plot(
+                    epochs,
+                    [pde if pde is not None else float("nan") for pde in pde_losses],
+                    linestyle=ls,
+                    alpha=alpha,
+                    label=f"{label} - PDE",
+                    color=MODEL_COLORS[1],
+                )
 
     if not plotted_any:
         plt.close(fig)
@@ -136,7 +152,6 @@ def plot_model_loss(
         ax.set_yscale("log")
 
     ax.grid(True, which="both", linestyle="--", linewidth=0.6, alpha=0.6)
-    ax.legend(loc="upper right", frameon=False)
 
     fig.tight_layout()
     out_dir.mkdir(parents=True, exist_ok=True)

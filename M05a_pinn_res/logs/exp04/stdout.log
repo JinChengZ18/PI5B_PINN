@@ -1,0 +1,28 @@
+[2026-01-29 10:29:50][INFO] 日志文件创建于: /data/sda/zjc/comsol_pinn/logs/M04c/exp04/train_20260129_102950_gpu4_pid1035499.log
+[2026-01-29 10:29:50][INFO] 进程 PID: 1035499
+[2026-01-29 10:29:50][INFO] ========== PINN 训练开始 ==========
+[2026-01-29 10:29:50][INFO] 物理项权重 λ_pde = 2.0
+[2026-01-29 10:29:50][INFO] 使用设备: cuda
+[2026-01-29 10:29:50][INFO] 训练参数: {'lambda_pde': 2.0, 'epochs': 200, 'lr': 0.005, 'batch_cases': 1, 'use_pde_anneal': True, 'pde_anneal_gamma': 0.03, 'pde_lambda_min': 0.0, 'use_soft_mask': False, 'mask_alpha': 40.0, 'mask_temp_ratio': 0.7, 'points_per_case': 320000, 'device': 'cuda', 'num_workers': 8, 'log_dir': 'logs/M04c/exp04', 'ckpt_dir': 'checkpoints/M04c/exp04'}
+[2026-01-29 10:29:50][INFO] 数据集大小: 141 cases
+[2026-01-29 10:29:50][INFO] 每 case 采样点数: 320000
+[2026-01-29 10:29:51][INFO] 模型结构:
+SimplePINN(
+  (net): Sequential(
+    (0): Linear(in_features=7, out_features=128, bias=True)
+    (1): SiLU()
+    (2): Linear(in_features=128, out_features=128, bias=True)
+    (3): SiLU()
+    (4): Linear(in_features=128, out_features=1, bias=True)
+  )
+)
+[2026-01-29 10:29:51][INFO] 优化器: AdamW, 初始 lr=0.005, 调度策略: ReduceLROnPlateau(factor=0.5, patience=6)
+[2026-01-29 10:32:08][INFO] [Epoch 001] MSE Loss=22719.484475 | PDE Loss=4.883369 | λ_pde=2.000e+00 | LR=5.00e-03
+[2026-01-29 10:34:23][INFO] [Epoch 002] MSE Loss=1010.558588 | PDE Loss=0.605079 | λ_pde=1.941e+00 | LR=5.00e-03
+[2026-01-29 10:36:38][INFO] [Epoch 003] MSE Loss=881.086904 | PDE Loss=0.171301 | λ_pde=1.884e+00 | LR=5.00e-03
+[2026-01-29 10:38:52][INFO] [Epoch 004] MSE Loss=846.172088 | PDE Loss=0.316749 | λ_pde=1.828e+00 | LR=5.00e-03
+[2026-01-29 10:41:06][INFO] [Epoch 005] MSE Loss=824.421784 | PDE Loss=0.491706 | λ_pde=1.774e+00 | LR=5.00e-03
+[2026-01-29 10:43:20][INFO] [Epoch 006] MSE Loss=813.141861 | PDE Loss=0.749937 | λ_pde=1.721e+00 | LR=5.00e-03
+[2026-01-29 10:45:33][INFO] [Epoch 007] MSE Loss=776.087742 | PDE Loss=0.932637 | λ_pde=1.671e+00 | LR=5.00e-03
+[2026-01-29 10:47:46][INFO] [Epoch 008] MSE Loss=817.143801 | PDE Loss=1.106813 | λ_pde=1.621e+00 | LR=5.00e-03
+[2026-01-29 10:50:01][INFO] [Epoch 009] MSE Loss=849.272891 | PDE Loss=1.260147 | λ_pde=1.573e+00 | LR=5.00e-03

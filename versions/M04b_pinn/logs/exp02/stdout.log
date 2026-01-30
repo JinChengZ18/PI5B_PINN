@@ -1,0 +1,19 @@
+[2026-01-28 11:19:05][INFO] 日志文件创建于: /data/sda/zjc/comsol_pinn/logs/M04b/exp06/train_20260128_111905_gpu2_pid3140559.log
+[2026-01-28 11:19:05][INFO] 进程 PID: 3140559
+[2026-01-28 11:19:05][INFO] ========== PINN 训练开始 ==========
+[2026-01-28 11:19:05][INFO] 物理项权重 λ_pde = 0.5
+[2026-01-28 11:19:05][INFO] 使用设备: cuda
+[2026-01-28 11:19:05][INFO] 训练参数: {'lambda_pde': 0.5, 'epochs': 120, 'lr': 0.005, 'batch_cases': 1, 'use_pde_anneal': True, 'pde_anneal_gamma': 0.03, 'pde_lambda_min': 0.0, 'use_soft_mask': False, 'mask_alpha': 40.0, 'mask_temp_ratio': 0.7, 'points_per_case': 320000, 'device': 'cuda', 'num_workers': 8, 'log_dir': 'logs/M04b/exp06', 'ckpt_dir': 'checkpoints/M04b/exp06'}
+[2026-01-28 11:19:05][INFO] 数据集大小: 141 cases
+[2026-01-28 11:19:05][INFO] 每 case 采样点数: 320000
+[2026-01-28 11:19:06][INFO] 模型结构:
+SimplePINN(
+  (net): Sequential(
+    (0): Linear(in_features=7, out_features=128, bias=True)
+    (1): SiLU()
+    (2): Linear(in_features=128, out_features=128, bias=True)
+    (3): SiLU()
+    (4): Linear(in_features=128, out_features=1, bias=True)
+  )
+)
+[2026-01-28 11:19:06][INFO] 优化器: AdamW, 初始 lr=0.005, 调度策略: ReduceLROnPlateau(factor=0.5, patience=6)

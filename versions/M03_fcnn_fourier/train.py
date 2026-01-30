@@ -12,7 +12,7 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
 
 from M02_fcnn_anneal.dataset import ThermalHeatSourceDataset
-from M02_fcnn_anneal.model import SimplePINN
+from M02_fcnn_anneal.model import SimpleFourier
 from M02_fcnn_anneal.logger import setup_logger
 
 
@@ -64,7 +64,7 @@ def main():
     logger.info(f"每 case 采样点数: {args.points_per_case}")
 
     # ================= 模型 =================
-    model = SimplePINN().to(device)
+    model = SimpleFourier().to(device)
     optimizer = torch.optim.AdamW(model.parameters(), lr=args.lr)
 
     # ReduceLROnPlateau 学习率调度器

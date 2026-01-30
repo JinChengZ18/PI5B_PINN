@@ -15,6 +15,8 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.colors import TwoSlopeNorm
+from matplotlib.gridspec import GridSpec
+
 
 # ==========================================================
 # 项目根目录
@@ -28,6 +30,11 @@ sys.path.insert(0, str(PROJECT_ROOT))
 # ==========================================================
 plt.style.use("seaborn-v0_8-paper")
 plt.rcParams.update({
+    "font.family": "Times New Roman",
+    "mathtext.fontset": "custom",
+    "mathtext.rm": "Times New Roman",
+    "mathtext.it": "Times New Roman:italic",
+    "mathtext.bf": "Times New Roman:bold",
     "font.size": 13,
     "axes.labelsize": 15,
     "axes.titlesize": 16,
@@ -55,7 +62,9 @@ def plot_3d_scatter(
         x, y, z, values = x[idx], y[idx], z[idx], values[idx]
 
     fig = plt.figure(figsize=(9, 7))
-    ax = fig.add_subplot(111, projection="3d")
+    gs = GridSpec(1, 2, width_ratios=[1, 0.03], wspace=0.12)
+    ax = fig.add_subplot(gs[0, 0], projection="3d")
+    cax = fig.add_subplot(gs[0, 1])
 
     sc = ax.scatter(
         x, y, z,
@@ -63,21 +72,115 @@ def plot_3d_scatter(
         cmap=cmap,
         norm=norm,
         s=1,
-        alpha=0.85
+        alpha=0.85,
+        linewidth=0
     )
 
-    ax.set_title(title)
+    ax.set_title(title, pad=12)
     ax.set_xlabel("x")
     ax.set_ylabel("y")
     ax.set_zlabel("z")
+    ax.view_init(elev=20, azim=-135)
+    ax.grid(False)
 
-    cb = plt.colorbar(sc, ax=ax, shrink=0.6)
+    cb = fig.colorbar(sc, cax=cax, shrink=0.50)
     cb.set_label(cbar_label)
 
-    plt.tight_layout()
+    fig.subplots_adjust(
+        left=0.04,
+        right=0.96,
+        top=0.90,
+        bottom=0.06
+    )
+
     save_path.parent.mkdir(parents=True, exist_ok=True)
     plt.savefig(save_path)
     plt.close(fig)
+
+
+
+def plot_3d_scatter_pair(
+    x, y, z,
+    values_left, values_right,
+    title_left, title_right,
+    cbar_label,
+    save_path,
+    cmap,
+    norm=None,
+    max_points=50000
+):
+    if len(x) > max_points:
+        idx = np.random.choice(len(x), max_points, replace=False)
+        x, y, z = x[idx], y[idx], z[idx]
+        values_left = values_left[idx]
+        values_right = values_right[idx]
+
+    fig = plt.figure(figsize=(15, 6))
+
+    # -----------------------------
+    # GridSpec: [left | right | cbar]
+    # -----------------------------
+    gs = GridSpec(
+        1, 3,
+        width_ratios=[1, 1, 0.03],
+        wspace=0.12
+    )
+
+    ax1 = fig.add_subplot(gs[0, 0], projection="3d")
+    ax2 = fig.add_subplot(gs[0, 1], projection="3d")
+    cax = fig.add_subplot(gs[0, 2])
+
+    sc1 = ax1.scatter(
+        x, y, z,
+        c=values_left,
+        cmap=cmap,
+        norm=norm,
+        s=1,
+        alpha=0.85,
+        linewidth=0
+    )
+
+    sc2 = ax2.scatter(
+        x, y, z,
+        c=values_right,
+        cmap=cmap,
+        norm=norm,
+        s=1,
+        alpha=0.85,
+        linewidth=0
+    )
+
+    # -----------------------------
+    # Axes formatting
+    # -----------------------------
+    for ax, title in zip([ax1, ax2], [title_left, title_right]):
+        ax.set_title(title, pad=12)
+        ax.set_xlabel("x")
+        ax.set_ylabel("y")
+        ax.set_zlabel("z")
+        ax.view_init(elev=20, azim=-135)  # 论文级固定视角
+        ax.grid(False)
+
+    # -----------------------------
+    # Colorbar (独立轴，绝不重叠)
+    # -----------------------------
+    cb = fig.colorbar(sc1, cax=cax, shrink=0.5)
+    cb.set_label(cbar_label)
+
+    # -----------------------------
+    # 手动控制边距（替代 tight_layout）
+    # -----------------------------
+    fig.subplots_adjust(
+        left=0.04,
+        right=0.96,
+        top=0.90,
+        bottom=0.06
+    )
+
+    save_path.parent.mkdir(parents=True, exist_ok=True)
+    plt.savefig(save_path)
+    plt.close(fig)
+
 
 
 # ==========================================================
@@ -90,13 +193,13 @@ def main():
     parser.add_argument(
         "--input_dir",
         type=str,
-        default="output/M04a/thermal_heat_source",
+        default="output/M02/thermal_heat_source",
         help="Inference CSV directory"
     )
     parser.add_argument(
         "--out_dir",
         type=str,
-        default="vis/inference/M04a",
+        default="vis/inference/M02",
         help="Visualization output directory"
     )
     parser.add_argument(
@@ -162,6 +265,18 @@ def main():
             title=f"{case_name}: $T_{{pred}}$",
             cbar_label="Temperature (K)",
             save_path=out_dir / "T_pred" / f"{case_name}_T_pred_3d.png",
+            cmap="turbo",
+            norm=plt.Normalize(vmin=T_min, vmax=T_max)
+        )
+        
+        # ---------- T_pred & T_true ----------
+        plot_3d_scatter_pair(
+            x, y, z,
+            T_pred, T_true,
+            title_left=f"{case_name}: $T_{{pred}}$",
+            title_right=f"{case_name}: $T_{{true}}$",
+            cbar_label="Temperature (K)",
+            save_path=out_dir / "T_pair" / f"{case_name}_T_pred_T_true_3d.png",
             cmap="turbo",
             norm=plt.Normalize(vmin=T_min, vmax=T_max)
         )
