@@ -17,34 +17,34 @@ echo "Max concurrent jobs: ${MAX_CONCURRENT}"
 # ================================
 EXPERIMENTS=(
   # ===== λ_pde 敏感性（S1–S5）=====
-  "--lambda_pde 0.1 --epochs 120 --lr 5e-3 --use_pde_anneal \
+  "--lambda_pde 0.1 --epochs 200 --lr 5e-3 --use_pde_anneal \
+   --log_dir logs/M04b/exp01 --ckpt_dir checkpoints/M04b/exp01"
+
+  "--lambda_pde 0.5 --epochs 200 --lr 5e-3 --use_pde_anneal \
+   --log_dir logs/M04b/exp02 --ckpt_dir checkpoints/M04b/exp02"
+
+  "--lambda_pde 1.0 --epochs 200 --lr 5e-3 --use_pde_anneal \
+   --log_dir logs/M04b/exp03 --ckpt_dir checkpoints/M04b/exp03"
+
+  "--lambda_pde 2.0 --epochs 200 --lr 5e-3 --use_pde_anneal \
+   --log_dir logs/M04b/exp04 --ckpt_dir checkpoints/M04b/exp04"
+
+  "--lambda_pde 3.0 --epochs 200 --lr 5e-3 --use_pde_anneal \
    --log_dir logs/M04b/exp05 --ckpt_dir checkpoints/M04b/exp05"
-
-  "--lambda_pde 0.5 --epochs 120 --lr 5e-3 --use_pde_anneal \
-   --log_dir logs/M04b/exp06 --ckpt_dir checkpoints/M04b/exp06"
-
-  "--lambda_pde 1.0 --epochs 120 --lr 5e-3 --use_pde_anneal \
-   --log_dir logs/M04b/exp07 --ckpt_dir checkpoints/M04b/exp07"
-
-  "--lambda_pde 2.0 --epochs 120 --lr 5e-3 --use_pde_anneal \
-   --log_dir logs/M04b/exp08 --ckpt_dir checkpoints/M04b/exp08"
-
-  "--lambda_pde 3.0 --epochs 120 --lr 5e-3 --use_pde_anneal \
-   --log_dir logs/M04b/exp09 --ckpt_dir checkpoints/M04b/exp09"
 
 
   # ===== Annealing γ 敏感性（A1–A3）=====
-  "--lambda_pde 1.0 --epochs 120 --lr 5e-3 \
+  "--lambda_pde 1.0 --epochs 200 --lr 5e-3 \
    --use_pde_anneal --pde_anneal_gamma 0.01 \
-   --log_dir logs/M04b/exp10 --ckpt_dir checkpoints/M04b/exp10"
+   --log_dir logs/M04b/exp06 --ckpt_dir checkpoints/M04b/exp6"
 
-  "--lambda_pde 1.0 --epochs 120 --lr 5e-3 \
+  "--lambda_pde 1.0 --epochs 200 --lr 5e-3 \
    --use_pde_anneal --pde_anneal_gamma 0.03 \
-   --log_dir logs/M04b/exp11 --ckpt_dir checkpoints/M04b/exp11"
+   --log_dir logs/M04b/exp07 --ckpt_dir checkpoints/M04b/exp7"
 
-  "--lambda_pde 1.0 --epochs 120 --lr 5e-3 \
+  "--lambda_pde 1.0 --epochs 200 --lr 5e-3 \
    --use_pde_anneal --pde_anneal_gamma 0.10 \
-   --log_dir logs/M04b/exp12 --ckpt_dir checkpoints/M04b/exp12"
+   --log_dir logs/M04b/exp08 --ckpt_dir checkpoints/M04b/exp8"
 )
 
 

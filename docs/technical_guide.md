@@ -1,6 +1,8 @@
 # PINN 技术文档
 
-本文档包含PINN项目的完整技术细节、原理推导、架构设计和扩展指南。
+**COSMOL-PINN** 是一个面向稳态热传导问题的 Physics-Informed Neural Network 框架，结合COMSOL 高精度仿真数据、物理约束、Fourier 特征增强、工程级训练与显存管理策略，用于实现 **快速参数扫描、跨工况泛化、低成本推理** 的热场预测模型。
+
+
 
 [TOC]
 
@@ -127,13 +129,30 @@ B: 频率矩阵 (n × 7), 从高斯分布 N(0, σ²) 采样
 ∇²T = ∂²T/∂x² + ∂²T/∂y² + ∂²T/∂z²
 ```
 
-#### 自动微分实现
+#### 自动微分实现 
 
 ```python
-
+def laplacian(self, x):
+    T = self.forward(x)
+    grads = torch.autograd.grad(T,x,
+        grad_outputs=torch.ones_like(T),
+        create_graph=True,
+        retain_graph=True,
+    )[0]
+    lap = 0.0
+    for i in range(3):
+        grad_i = grads[:, i:i+1]
+        grad2 = torch.autograd.grad(grad_i,x,
+            grad_outputs=torch.ones_like(grad_i),
+            create_graph=True,
+            retain_graph=True,
+        )[0][:, i:i+1]
+        lap += grad2
+    return lap
 ```
 
 **计算复杂度**:
+
 - 前向传播: 1次
 - 一阶导数: 1次反向传播
 - 二阶导数: 3次反向传播 (x, y, z各一次)
@@ -160,11 +179,13 @@ class HeatEquationLoss(nn.Module):
 - 而是通过边界条件和数据拟合隐式学习
 - 因此物理损失简化为 `||∇²T||²`
 
-### 3.3 组合损失函数
+### 3.3 组合损失函数 
 
-```python
-
-```
+$$
+\mathcal{L}_{total}
+= \lambda_{data} \mathcal{L}_{data}
++ \lambda_{physics} \mathcal{L}_{physics}
+$$
 
 **权重选择**:
 - `λ_data = 1.0`: 数据拟合为主要目标
@@ -177,9 +198,22 @@ class HeatEquationLoss(nn.Module):
 λ_physics 过大 (0.5) → 物理约束过强，拟合困难
 ```
 
+
+
 ---
 
 ## 4. 训练策略
+
+### 4.1 优化器 
+
+- Adam / AdamW
+- 初始学习率：`5e-4`
+
+### 4.2 OOM 自恢复机制
+
+- 捕获 `torch.cuda.OutOfMemoryError`
+- 动态降低采样点数
+- 重建 DataLoader
 
 
 

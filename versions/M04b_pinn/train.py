@@ -124,14 +124,12 @@ def main():
     # ================= 训练 =================
     for epoch in range(1, args.epochs + 1):
         model.train()
-        total_loss = 0.0
+        total_loss, total_loss_pde = 0.0, 0.0
 
         lambda_pde_t = compute_lambda_pde(epoch, args)
 
-        for batch_idx in range(len(loader)):
+        for x7, T_norm, T_min, T_max in loader:
             try:
-                x7, T_norm, T_min, T_max = next(iter(loader))
-
                 x7 = x7.squeeze(0).to(device)
                 T_norm = T_norm.squeeze(0).to(device)
                 x7.requires_grad_(True)
@@ -150,10 +148,11 @@ def main():
                 optimizer.step()
 
                 total_loss += loss.item()
+                total_loss_pde += loss_pde.item()
 
             except torch.cuda.OutOfMemoryError:
                 torch.cuda.empty_cache()
-                logger.warning(f"[OOM] Epoch {epoch}, Batch {batch_idx}: 降低采样点数重试")
+                logger.warning(f"[OOM] Epoch {epoch}: 降低采样点数重试")
                 args.points_per_case = max(10000, args.points_per_case // 2)
                 dataset = ThermalHeatSourceDataset(points_per_case=args.points_per_case)
                 loader = DataLoader(
@@ -167,12 +166,13 @@ def main():
                 break
 
         avg_loss = total_loss / len(loader)
+        avg_loss_pde = total_loss_pde / len(loader)
         current_lr = optimizer.param_groups[0]["lr"]
 
         logger.info(
             f"[Epoch {epoch:03d}] "
-            f"Loss={avg_loss:.6f} | "
-            f"PDE={loss_pde.item():.6f} | "
+            f"MSE Loss={avg_loss:.6f} | "
+            f"PDE Loss={avg_loss_pde:.6f} | "
             f"λ_pde={lambda_pde_t:.3e} | "
             f"LR={current_lr:.2e}"
         )

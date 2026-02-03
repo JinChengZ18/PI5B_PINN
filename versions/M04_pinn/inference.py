@@ -69,16 +69,14 @@ def main():
     # ================= 推理 =================
     with torch.no_grad():
         for case_idx, batch in enumerate(loader):
-            (x7, T_true) = batch[:2]
-            # 兼容 batch_cases=1 的形状：[1, N, 7] -> [N, 7]
-            # 若未来 batch_cases>1，这里会直接报错提醒（避免静默写错文件）
+            x7, T_true = batch[:2]
+
             if x7.ndim == 3 and x7.shape[0] == 1:
                 x7 = x7.squeeze(0)
                 T_true = T_true.squeeze(0)
 
             x7 = x7.to(device)
             T_true = T_true.to(device)
-
             T_pred = model(x7)
 
             x7_np = x7.cpu().numpy()
@@ -96,7 +94,6 @@ def main():
                 })
 
             df = pd.DataFrame.from_records(records)
-
             case_name = f"case_{case_idx:04d}.csv"
             output_path = output_root / case_name
             df.to_csv(output_path, index=False)

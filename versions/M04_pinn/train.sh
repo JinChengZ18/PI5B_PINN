@@ -16,16 +16,45 @@ echo "Max concurrent jobs: ${MAX_CONCURRENT}"
 # 实验参数
 # ================================
 EXPERIMENTS=(
-  "--lambda_pde 0.1 --epochs 120 --lr 5e-3 --points_per_case 600000 --log_dir logs/M04/exp01 --ckpt_dir checkpoints/M04/exp01"
-  "--lambda_pde 0.2 --epochs 120 --lr 5e-3 --points_per_case 600000 --log_dir logs/M04/exp02 --ckpt_dir checkpoints/M04/exp02"
-  "--lambda_pde 0.4 --epochs 120 --lr 5e-3 --points_per_case 600000 --log_dir logs/M04/exp03 --ckpt_dir checkpoints/M04/exp03"
-  "--lambda_pde 0.8 --epochs 120 --lr 5e-3 --points_per_case 600000 --log_dir logs/M04/exp04 --ckpt_dir checkpoints/M04/exp04"
-  "--lambda_pde 1.0 --epochs 120 --lr 5e-3 --points_per_case 600000 --log_dir logs/M04/exp05 --ckpt_dir checkpoints/M04/exp05"
-  "--lambda_pde 1.2 --epochs 120 --lr 5e-3 --points_per_case 600000 --log_dir logs/M04/exp06 --ckpt_dir checkpoints/M04/exp06"
-  "--lambda_pde 1.5 --epochs 120 --lr 5e-3 --points_per_case 600000 --log_dir logs/M04/exp07 --ckpt_dir checkpoints/M04/exp07"
-  "--lambda_pde 2.0 --epochs 120 --lr 5e-3 --points_per_case 600000 --log_dir logs/M04/exp08 --ckpt_dir checkpoints/M04/exp08"
-  "--lambda_pde 3.0 --epochs 120 --lr 5e-3 --points_per_case 600000 --log_dir logs/M04/exp09 --ckpt_dir checkpoints/M04/exp09"
+  # ===== λ_pde 敏感性（S1–S5）=====
+  "--lambda_pde 0.00 --lr 5e-3 --use_pde_anneal \
+   --log_dir logs/M04/exp01 --ckpt_dir checkpoints/M04/exp01"
+
+  "--lambda_pde 0.25 --lr 5e-3 --use_pde_anneal \
+   --log_dir logs/M04/exp02 --ckpt_dir checkpoints/M04/exp02"
+
+  "--lambda_pde 0.50 --lr 5e-3 --use_pde_anneal \
+   --log_dir logs/M04/exp03 --ckpt_dir checkpoints/M04/exp03"
+
+  "--lambda_pde 2.00 --lr 5e-3 --use_pde_anneal \
+   --log_dir logs/M04/exp04 --ckpt_dir checkpoints/M04/exp04"
+
+  "--lambda_pde 3.00 --lr 5e-3 --use_pde_anneal \
+   --log_dir logs/M04/exp05 --ckpt_dir checkpoints/M04/exp05"
+
+
+  # ===== Annealing γ 敏感性（A1–A5）=====
+  "--lambda_pde 1.0 --lr 5e-3 \
+   --use_pde_anneal --pde_anneal_gamma 0.01 \
+   --log_dir logs/M04/exp06 --ckpt_dir checkpoints/M04/exp06"
+
+  "--lambda_pde 1.0 --lr 5e-3 \
+   --use_pde_anneal --pde_anneal_gamma 0.02 \
+   --log_dir logs/M04/exp07 --ckpt_dir checkpoints/M04/exp07"
+
+  "--lambda_pde 1.0 --lr 5e-3 \
+   --use_pde_anneal --pde_anneal_gamma 0.20 \
+   --log_dir logs/M04/exp08 --ckpt_dir checkpoints/M04/exp08"
+
+  "--lambda_pde 1.0 --lr 5e-3 \
+   --use_pde_anneal --pde_anneal_gamma 0.50 \
+   --log_dir logs/M04/exp09 --ckpt_dir checkpoints/M04/exp09"
+
+  "--lambda_pde 1.0 --lr 5e-3 \
+   --use_pde_anneal --pde_anneal_gamma 1.00 \
+   --log_dir logs/M04/exp10 --ckpt_dir checkpoints/M04/exp10"
 )
+
 
 # ================================
 # 启动任务（防断线 + 并发控制）

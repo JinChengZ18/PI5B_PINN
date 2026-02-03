@@ -30,7 +30,7 @@ def parse_args():
 
     # ===== 新增：PDE 高级功能（默认开启）=====
     parser.add_argument("--use_pde_anneal", action="store_true", default=False)
-    parser.add_argument("--pde_anneal_gamma", type=float, default=0.03)
+    parser.add_argument("--pde_anneal_gamma", type=float, default=0.1)
     parser.add_argument("--pde_lambda_min", type=float, default=0.0)
 
     parser.add_argument("--use_soft_mask", action="store_true", default=False)

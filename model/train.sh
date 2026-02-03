@@ -1,0 +1,87 @@
+#!/bin/bash
+
+# ================================
+# GPU 与并发配置
+# ================================
+GPUS=(1 2 3 4 5)
+TOTAL_GPUS=${#GPUS[@]}
+
+MAX_TASKS_PER_GPU=2
+MAX_CONCURRENT=$((TOTAL_GPUS * MAX_TASKS_PER_GPU))
+
+echo "Using GPUs: ${GPUS[@]}"
+echo "Max concurrent jobs: ${MAX_CONCURRENT}"
+
+# ================================
+# 实验参数
+# ================================
+EXPERIMENTS=(
+  # ===== λ_pde 敏感性（S1–S5）=====
+  "--lambda_pde 0.00 --lr 5e-3 --use_pde_anneal \
+   --log_dir logs/model/exp01 --ckpt_dir checkpoints/model/exp01"
+
+  "--lambda_pde 0.25 --lr 5e-3 --use_pde_anneal \
+   --log_dir logs/model/exp02 --ckpt_dir checkpoints/model/exp02"
+
+  "--lambda_pde 0.50 --lr 5e-3 --use_pde_anneal \
+   --log_dir logs/model/exp03 --ckpt_dir checkpoints/model/exp03"
+
+  "--lambda_pde 2.00 --lr 5e-3 --use_pde_anneal \
+   --log_dir logs/model/exp04 --ckpt_dir checkpoints/model/exp04"
+
+  "--lambda_pde 3.00 --lr 5e-3 --use_pde_anneal \
+   --log_dir logs/model/exp05 --ckpt_dir checkpoints/model/exp05"
+
+
+  # ===== Annealing γ 敏感性（A1–A5）=====
+  "--lambda_pde 1.0 --lr 5e-3 \
+   --use_pde_anneal --pde_anneal_gamma 0.01 \
+   --log_dir logs/model/exp06 --ckpt_dir checkpoints/model/exp06"
+
+  "--lambda_pde 1.0 --lr 5e-3 \
+   --use_pde_anneal --pde_anneal_gamma 0.02 \
+   --log_dir logs/model/exp07 --ckpt_dir checkpoints/model/exp07"
+
+  "--lambda_pde 1.0 --lr 5e-3 \
+   --use_pde_anneal --pde_anneal_gamma 0.20 \
+   --log_dir logs/model/exp08 --ckpt_dir checkpoints/model/exp08"
+
+  "--lambda_pde 1.0 --lr 5e-3 \
+   --use_pde_anneal --pde_anneal_gamma 0.50 \
+   --log_dir logs/model/exp09 --ckpt_dir checkpoints/model/exp09"
+
+  "--lambda_pde 1.0 --lr 5e-3 \
+   --use_pde_anneal --pde_anneal_gamma 1.00 \
+   --log_dir logs/model/exp10 --ckpt_dir checkpoints/model/exp10"
+)
+
+
+# ================================
+# 启动任务（防断线 + 并发控制）
+# ================================
+for i in "${!EXPERIMENTS[@]}"; do
+  GPU_INDEX=$((i % TOTAL_GPUS))
+  GPU_ID=${GPUS[$GPU_INDEX]}
+
+  # ---- 并发限制 ----
+  while [ "$(jobs -r | wc -l)" -ge "$MAX_CONCURRENT" ]; do
+    sleep 1
+  done
+
+  EXP_ID=$(printf "%02d" $((i+1)))
+  LOG_DIR="logs/exp${EXP_ID}"
+  mkdir -p "$LOG_DIR"
+
+  echo "Launching experiment ${EXP_ID} on GPU ${GPU_ID}"
+
+  nohup bash -c "
+    CUDA_VISIBLE_DEVICES=${GPU_ID} \
+    python train.py \
+      --num_workers 8 \
+      ${EXPERIMENTS[$i]}
+  " > "${LOG_DIR}/stdout.log" 2>&1 &
+
+  disown
+done
+
+echo "🚀 All jobs submitted safely (SSH-safe)"

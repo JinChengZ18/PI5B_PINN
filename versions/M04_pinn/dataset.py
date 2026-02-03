@@ -96,22 +96,19 @@ class ThermalHeatSourceDataset(Dataset):
     def __getitem__(self, idx):
         case = self.index[idx]
 
+        # ---------- 1. 读取 CSV ----------
         csv_path = Path(case["export_file"])
         data = read_comsol_csv(csv_path)  # (N,4)
 
+        # ---------- 2. 随机采样 ----------
         N = data.shape[0]
         ids = torch.randperm(N)[: self.points_per_case]
         sampled = data[ids]
 
-        xyz = sampled[:, :3]
-        T = sampled[:, 3:4]
+        xyz = sampled[:, :3]      # (B,3)
+        T = sampled[:, 3:4]       # (B,1)
 
-        # ===== 坐标归一化到 [-1,1]（体系一致）=====
-        xyz_min = xyz.min(dim=0, keepdim=True)[0]
-        xyz_max = xyz.max(dim=0, keepdim=True)[0]
-        xyz = 2 * (xyz - xyz_min) / (xyz_max - xyz_min) - 1
-
-        # ===== 功率参数（原样）=====
+        # ---------- 3. 功耗参数 ----------
         p = case["parameters"]
         params = torch.tensor(
             [
@@ -123,12 +120,9 @@ class ThermalHeatSourceDataset(Dataset):
             dtype=torch.float32
         ).unsqueeze(0).repeat(xyz.shape[0], 1)
 
+        # ---------- 4. 拼接 PINN 输入 ----------
         x7 = torch.cat([xyz, params], dim=1)
 
-        # ===== PDE mask：高温区域不罚 =====
-        T_max = T.max()
-        pde_mask = (T < 0.7 * T_max).float()
-
-        return x7, T, pde_mask
+        return x7, T
 
 

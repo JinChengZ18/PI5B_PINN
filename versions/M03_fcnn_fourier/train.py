@@ -11,13 +11,13 @@ from torch.utils.data import DataLoader
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
 
-from M02_fcnn_anneal.dataset import ThermalHeatSourceDataset
-from M02_fcnn_anneal.model import SimpleFourier
-from M02_fcnn_anneal.logger import setup_logger
+from M03_fcnn_fourier.dataset import ThermalHeatSourceDataset
+from M03_fcnn_fourier.model import SimpleFourier
+from M03_fcnn_fourier.logger import setup_logger
 
 
 def parse_args():
-    parser = argparse.ArgumentParser(description="FCNN-ANNEAL Training Script")
+    parser = argparse.ArgumentParser(description="FCNN-Fourier Training Script")
 
     # ---------- 训练超参数 ----------
     parser.add_argument("--epochs", type=int, default=50)
@@ -28,8 +28,8 @@ def parse_args():
 
     # ---------- 运行配置 ----------
     parser.add_argument("--device", type=str, default="cuda")
-    parser.add_argument("--log_dir", type=str, default="logs/M02")
-    parser.add_argument("--ckpt_dir", type=str, default="checkpoints/M02")
+    parser.add_argument("--log_dir", type=str, default="logs/M03")
+    parser.add_argument("--ckpt_dir", type=str, default="checkpoints/M03")
 
     return parser.parse_args()
 
@@ -109,7 +109,7 @@ def main():
     ckpt_dir = PROJECT_ROOT / args.ckpt_dir
     ckpt_dir.mkdir(parents=True, exist_ok=True)
 
-    ckpt_path = ckpt_dir / "M02_fcnn_anneal.pt"
+    ckpt_path = ckpt_dir / "M03_fcnn_fourier.pt"
     torch.save(model.state_dict(), ckpt_path)
 
     logger.info(f"模型已保存至: {ckpt_path}")

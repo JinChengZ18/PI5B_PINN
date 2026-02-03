@@ -130,7 +130,7 @@ class ThermalHeatSourceDataset(Dataset):
         xyz_max = xyz.max(dim=0, keepdim=True)[0]
         xyz = 2 * (xyz - xyz_min) / (xyz_max - xyz_min) - 1
 
-        # ===== 功率参数（原样）=====
+        # ===== 功率参数 =====
         p = case["parameters"]
         # 原始功率参数（单位 W）
         params_raw = torch.tensor([
@@ -140,8 +140,9 @@ class ThermalHeatSourceDataset(Dataset):
             p["other_power"],
         ], dtype=torch.float32)
         # 推荐归一化方式：min-max 到 [0,1]，再线性映射到 [-1,1]
-        # 假设功率范围已知：0W ~ 3W
-        params_norm = 2.0 * (params_raw / 3.0) - 1.0
+        params_raw_min = params_raw.min(dim=0, keepdim=True)[0]
+        params_raw_max = params_raw.max(dim=0, keepdim=True)[0]
+        params_norm = 2 * (params_raw - params_raw_min) / (params_raw_max - params_raw_min) - 1
         params = params_norm.unsqueeze(0).repeat(xyz.shape[0], 1)
         x7 = torch.cat([xyz, params], dim=1)
 

@@ -4,11 +4,6 @@ import torch.nn as nn
 
 
 class SimplePINN(nn.Module):
-    """
-    M04-PINN:
-    在 M02_fcnn_anneal 基础上增加 Laplacian 计算
-    """
-
     def __init__(self):
         super().__init__()
         self.net = nn.Sequential(
